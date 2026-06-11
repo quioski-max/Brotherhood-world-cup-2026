@@ -1,7 +1,12 @@
+```python
 import streamlit as st
-import pandas as pd
+from streamlit_option_menu import option_menu
 
-st.set_page_config(page_title="World Cup 2026 Sweepstake", page_icon="🏆")
+st.set_page_config(
+    page_title="World Cup 2026 Sweepstake",
+    page_icon="⚽",
+    layout="wide"
+)
 
 participants = {
     "Cabecinha": ["England", "Norway", "Türkiye", "Qatar"],
@@ -16,18 +21,75 @@ participants = {
     "Victor": ["Brazil", "Switzerland", "Ghana", "Uzbekistan", "Ecuador"]
 }
 
-st.title("🏆 Brotherhood World Cup 2026")
+st.markdown(
+    """
+    <h1 style='font-size:60px'>
+    ⚽ World Cup 2026 Sweepstake
+    </h1>
+    """,
+    unsafe_allow_html=True
+)
 
-tab1, tab2 = st.tabs(["Leaderboard", "Teams"])
+selected = option_menu(
+    menu_title=None,
+    options=[
+        "Fixtures & Results",
+        "Group Tables",
+        "Knockouts",
+        "WhatsApp",
+        "Who Owns What"
+    ],
+    icons=[
+        "calendar-event",
+        "table",
+        "trophy",
+        "whatsapp",
+        "people-fill"
+    ],
+    orientation="horizontal",
+    default_index=4
+)
 
-with tab1:
-    leaderboard = pd.DataFrame(
-        [{"Player": p, "Points": 0} for p in participants.keys()]
-    )
-    st.dataframe(leaderboard, use_container_width=True)
+if selected == "Who Owns What":
 
-with tab2:
+    st.subheader("Team Ownership")
+
     for player, teams in participants.items():
-        st.subheader(player)
-        for team in teams:
-            st.write("⚽", team)
+
+        with st.expander(player):
+
+            for team in teams:
+                st.write(f"⚽ {team}")
+
+elif selected == "WhatsApp":
+
+    st.subheader("WhatsApp Group")
+
+    st.info(
+        "Paste your WhatsApp invite link here."
+    )
+
+elif selected == "Fixtures & Results":
+
+    st.subheader("Fixtures & Results")
+
+    st.info(
+        "World Cup fixtures will appear here."
+    )
+
+elif selected == "Group Tables":
+
+    st.subheader("Group Tables")
+
+    st.info(
+        "Group standings will appear here."
+    )
+
+elif selected == "Knockouts":
+
+    st.subheader("Knockout Stage")
+
+    st.info(
+        "Knockout bracket will appear here."
+    )
+```

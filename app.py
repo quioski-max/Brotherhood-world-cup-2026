@@ -91,4 +91,3 @@ elif selected == "Knockouts":
     st.info(
         "Knockout bracket will appear here."
     )
-```
